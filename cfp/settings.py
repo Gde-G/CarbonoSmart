@@ -292,3 +292,24 @@ ACCOUNT_FORMS = {
     'signup': 'users.forms.MyUserAllauthSignUpForm',
     'user_token': 'allauth.account.forms.UserTokenForm',
 }
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_FILE_OVERWRITE = bool(int(os.environ.get('AWS_S3_FILE_OVERWRITE')))
+				
+STATIC_URL = f'{AWS_S3_CUSTOM_DOMAIN}/static/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+MEDIA_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+STORAGES = {
+    #Media files management
+    "default": {
+    	"BACKEND": "cfp.storage_backends.MediaStorage"
+    },
+    # Staticfiles
+    "staticfiles":{
+    	"BACKEND": "cfp.storage_backends.StaticStorage"
+    },
+}
