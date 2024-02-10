@@ -1,0 +1,42 @@
+{% extends "account/email/base_message.html" %}
+{% load i18n %}
+
+{% block style-ext %}
+<style>
+  .text-explain{
+    margin: 5px 0;
+    color: rgb(39, 39, 39);
+    font-size: 16px;
+  }
+  .text-email{
+    color: black;
+    font-size: 18px;
+    width: max-content;
+    margin: 0 auto;
+  }
+  .link-reset{
+    color: rgb(0, 0, 80);
+    font-size: 20px;
+    margin: 5px auto;
+    display: block;
+    width: max-content;
+  }
+  .container-content{
+    width: 100%;
+  }
+</style>
+{% endblock style-ext%}
+{% block content %}
+  <div class="container-content">
+    <p class="text-explain">You are receiving this e-mail because you or someone else tried to signup for an
+      account using e-mail address:</p>
+    
+    <p class="text-email">{{ email }}</p>
+    
+    <p class="text-explain">However, an account using that e-mail address already exists. In case you have
+      forgotten about this, please use the password forgotten procedure to recover
+      your account:
+    </p>
+    <a href="{{ password_reset_url }}" class="link-reset">Recover your password</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'main.html'%}
+
+{% load i18n %}
+
+{% block title %}Marketplace /{% endblock title %}
+
+{% block header %} Marketplace de <span translate="no">Carbono Smart</span>{% endblock header%}
+{% load static %}
+{% block content %}
+<div class="bg-nav-primary"></div>
+<section id="marketplace">
+  <div class="container cont-handler">
+    <img src="{% static 'assets/images/cfp-logo.png'%}" class="img-logo" alt="Carbono Smart logo">
+    <div class="content-disabled">
+      <p class="section-p">Lo sentimos esta seccíon sigue en desarrollo</p>
+      <p class="seciont-p">
+        Para obtener la informacion sobre el Marketplace de 
+        <span translate="no">Carbono Smart </span> puede contactarnos en nuestra seccion de
+        <a href="{% url 'contact' %}" class="link-light h4 d-block">Contacto <i
+            class="fa-regular fa-hand-pointer mx-2"></i></a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

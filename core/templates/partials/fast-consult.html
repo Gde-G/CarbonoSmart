@@ -1,0 +1,17 @@
+<form hx-post="{% url 'fast-consultation'%}" hx-target="this" hx-trigger="submit" hx-swap="outerHTML">
+  {% csrf_token %}
+  <div id="consult-res" class="text-center">{{cons_msg|safe}}</div>
+  <div class="form-floating">
+    <textarea name="consultation" id="id_consultation" class="form-control" rows="5" data-bs-toggle="tooltip"
+      data-bs-placement="top" data-bs-title="Necesita haber iniciado sesion para enviar la consulta"></textarea>
+    <label for="id_consultation">Consulta</label>
+  </div>
+  <div class="d-flex justify-content-center my-3">
+    {% if request.user.is_authenticated %}
+    <button type="submit" class="btn btn-gradient-s-p">Enviar</button>
+    {% else %}
+    <button type="button" onclick="topFunction()" class="btn btn-gradient-s-p" data-bs-toggle="collapse"
+      href="#loginCollapse" role="button" aria-expanded="false" aria-controls="loginCollapse">Enviar</button>
+    {% endif%}
+  </div>
+</form>

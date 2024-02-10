@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {% block metatags %} {% endblock metatags %}
+  <title translate="no">{% block title %}{% endblock title %} Carbono Smart</title>
+  <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static '/assets/images/favicon_io/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static '/assets/images/favicon_io/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static '/assets/images/favicon_io/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static '/assets/images/favicon_io/site.webmanifest' %}">
+  <link rel="stylesheet" href="{% static 'scss/style.css' %}">
+  <script src="{% static 'assets/js/htmx-1.9.4.min.js' %}"></script>
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-5SQ6Q2DX');
+    </script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body>
+  <header class="hide">
+    <h1>{% block header %} {% endblock header%}</h1>
+  </header>
+  {% include '_navbar.html' %}
+  {% include '_messages.html' %}
+  <main>
+    {% block content %} {% endblock content %}
+  
+    {% include 'partials/cookie-consent.html' %}
+  </main>
+
+  {% include '_footer.html' %}
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+  <script src="{% static 'libs/bootstrap-5.3.0-alpha3/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/passwdview.js'%}"></script>
+  {% if request.user.is_authenticated %}
+  <script src="{% static 'assets/js/navbar-notification.js' %}"></script>
+  {% endif %}
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SQ6Q2DX" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  {%block script-ext %} {% endblock script-ext %}
+
+</body>
+
+</html>

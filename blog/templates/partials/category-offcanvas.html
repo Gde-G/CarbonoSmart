@@ -1,0 +1,37 @@
+<div class="offcanvas-header border-bottom-1 border-secondary" style="background-color: rgb(144, 252, 252);">
+    <h4 class="offcanvas-title" id="createCategoryLabel">Create category</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form action="{% url 'add-category' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-3" hx-target="this" hx-swap="outerHTML">
+        <label for="id_name" class="form-label">Nombre</label>
+        <input type="text" class="form-control border-2 border-primary"
+          name="name" id="id_name" maxlength="100" 
+          placeholder="Ingrese el nombre de la categoria" autocomplete="off" required
+          hx-get="{% url 'validate-cate-name' %}" hx-trigger="input delay:1.5s">
+      </div>
+      <div class="mb-3">
+        <label for="id_description" class="form-label">Descripcion</label>
+        <textarea class="form-control border-2 border-primary" name="description" id="id_description"  rows="3" maxlength="300" placeholder="Breve descripcion de la categoria" required></textarea>
+      </div>
+      <div class="mb-3">
+        <h5 class="section-subtitle">Imagen principal</h5>
+        <div class="img-portada position-relative">
+          <div class="img-preview-portada"></div>
+          <div class="img-portada-border position-absolute top-50 start-50 translate-middle"></div>
+          <label class="img-portada-input" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-title="Subir imagen principal del articulo">
+        
+            <i class="fa-solid fa-plus position-absolute top-50 start-50 translate-middle"></i>
+            <input type="file" name="prin_img" id="id_prin_img" class="upload-img" value="Upload Photo"
+              data-browse-on-zone-click="true">
+          </label>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-secondary">Crear</button>
+      </div>
+    </form>
+  </div>

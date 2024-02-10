@@ -1,0 +1,48 @@
+{% extends "account/email/base_message.html" %}
+
+
+{% block style-ext %}
+<style>
+  .text-explain {
+    margin: 5px auto;
+    color: rgb(39, 39, 39);
+    font-size: 18px;
+  }
+
+  .text-email {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    width: max-content;
+    margin: 0 auto;
+  }
+
+  .link-signup {
+    color: rgb(0, 0, 80);
+    font-size: 22px;
+    margin: 5px auto;
+    font-weight: 700;
+    display: block;
+    width: max-content;
+  }
+
+  .container-content {
+    width: 100%;
+  }
+</style>
+{% endblock style-ext %}
+
+{% block content %}
+  <div class="container-content">
+    <p class="text-explain">
+      You are receiving this e-mail because you or someone else has requested a
+      password for your user account. However, we do not have any record of a user
+      with email <strong class="text-email">{{ email }}</strong>  in our database.
+    </p>
+
+    <p class="text-explain"> This mail can be safely ignored if you did not request a password reset.</p>
+
+    <p class="text-explain"> If it was you, you can sign up for an account using the link below.</p>
+    <a href="{{ signup_url }}" class="link-signup">Click to create a account</a> 
+  </div>
+{% endblock content%}

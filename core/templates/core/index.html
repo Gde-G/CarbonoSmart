@@ -1,0 +1,152 @@
+{% extends 'main.html' %}
+
+{% load i18n %}
+{% block metatags %}
+<meta name="description" content="Carbono Smart, sustentabilidad inteligente para un mundo
+  en evolución. Somos un grupo de personas comprometidas y apasionadas que se unieron debido
+  a la profunda preocupación por el estado ambiental. En lugar de aceptar la situación como
+  inevitable, decidimos formar esta organización con una visión única.">
+<meta name="keywords" content="Carbono Smart, Huella de Carbono, blog medio ambiente, cambio climatico">
+{% endblock metatags %}
+{% block header %}Inicio de <span translate="no">Carbono Smart</span> {% endblock header%}
+{% block content%}
+{% load static %}
+<section id="banner" class="mb-5">
+  <div class="banner">
+    <div class="banner-holder">
+      <img src="{% static 'assets/images/index/lago-verde2.jpg' %}" alt="" srcset="" class="banner-background-img">
+      <div class="row text-center space-holder">
+      </div>
+      <div class="banner-content">
+        <div class="row text-center">
+          <img src="{% static 'assets/images/cfp-logo.png'%}" alt="" class="banner-logo-img">
+        </div>
+        <div class="m-auto" style="width: min-content;">
+          <div class="typewrite">
+            <h1 class="">Carbono Smart</h1>
+          </div>
+        </div>
+        <div class="row text-center">
+          <p class="line-1 anim-typewriter">Sustentabilidad inteligente para un mundo en evolución.</p>
+        </div>
+        <div class="row text-center">
+          <div class="button-wrapper">
+            <button class="button" type="button">Ver articulos</button>
+            <div class="button-bg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+<img src=""></img>
+<section id="about-us" class="my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-8 col-md-6 text-center">
+        <h3 class="section-title text-capitalize">Sobre Nosotros</h3>
+        <div class="heading-line"></div>
+        <p class="section-p">
+          Informamos a organizaciones y particulares sobre el potencial economico de la sustentabilidad, a travez de
+          nuestros
+          conocimientos y experiencias.
+        </p>
+        <div class="d-flex justify-content-center my-3">
+          <a href="{% url 'about-us' %}" class="btn btn-gradient-p-s">Ver mas</a>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4 col-md-6 text-center position-relative" style="min-height: 180px;">
+        <div class="about-us-img">
+          <img src="{% static 'assets/images/cfp-logo.png'%}" alt="">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section id="posts" class="my-5">
+  <div class="img-waves mb-2" style="background-image: url({% static 'assets/images/index/wave-up.png' %});"></div>
+  <div class="posts">
+    <div class="container">
+      <div class="row text-center">
+        <h3 class="section-title text-white text-capitalize">Utlimos articulos</h3>
+        <div class="heading-line-light"></div>
+      </div>
+      <div class="row text-center">
+        {% for article in last_3_articles %}
+        <div class="row text-center w-100 my-3 px-0 mx-auto">
+          <a href="{% url 'article' article.slug%}" class="article-cont">
+            <div class="card mb-3 mx-auto px-0">
+              <div class="row g-0">
+                <div class="col-md-5">
+                  <div class="img-container">
+                    <img src="{% get_media_prefix %}{{article.prin_img}}" class="img-fluid rounded-start"
+                      alt="{{article.title}}">
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body">
+                    <span class="text-primary" style="margin-left: 50%;">{{article.category.name}}</span>
+                    <h5 class="card-title mt-2">{{article.title}}</h5>
+                    <p class="card-text"><small class="text-body-secondary">Publicado hace:
+                        {{article.publish_date|timesince}}</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+      <a href="{% url 'blog' %}" class="btn btn-outline-light rounded-pill w-50 fs-4"><i
+          class="fa-solid fa-hand-pointer me-3"></i>Ver todos</a>
+    </div>
+  </div>
+
+  <div class="img-waves" style="background-image: url({% static 'assets/images/index/wave-down.png'%});"></div>
+
+</section>
+<section id="contact" class="my-5">
+  <div class="container">
+    <div class="row text-center">
+      <h3 class="section-title text-capitalize">Contactanos</h3>
+      <div class="heading-line"></div>
+    </div>
+    <div class="row w-100 mx-0">
+      <div class="col-12 col-md-5 px-0 text-center">
+        <p class="text-muted">¡Estamos encantados de recibir tus consultas, inquietudes y dudas! Queremos asegurarnos de
+          brindarte toda la información y ayuda que necesitas. Por favor, utiliza el siguiente formulario para enviarnos
+          tu mensajes.</p>
+        <a href="{% url 'contact' %}" class="link-secondary text-decoration-none mb-4"><i
+            class="fa-solid fa-paper-plane me-2"></i>Otros medios de contacto</a>
+        <p class="section-p">Si eres una organización interesada en obtener más información sobre nuestros servicios,
+          contáctanos a través de nuestro <a href="{% url 'companies-contact'%}"
+            class="link-primary d-block text-decoration-none"> <i class="fa-solid fa-paper-plane me-2"></i>formulario
+            exclusivo para organizaciones.</a></p>
+      </div>
+      <div class="col-12 col-md-7 px-0">
+        {% include 'partials/fast-consult.html' %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+
+{% block script-ext %}
+<script type="text/javascript">
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+{% if request.user.is_authenticated %}
+{% else %}
+<script type="text/javascript">
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
+</script>
+{% endif %}
+{% endblock script-ext%}

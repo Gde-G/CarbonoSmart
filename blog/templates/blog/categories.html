@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load i18n %}
+{% block metatags %}
+<meta name="description" content="Estas son las categorias de los articulos que hemos escritos en Carbono Smart, podra encontrar desde Buena practicas Agricolas hasta Gases de Efecto Invernadero.">
+<meta name="keywords" content="Categoria del blog, Categorias Carbono Smart, Categorias Ambientales">
+{% endblock metatags %}
+{% block header %} Categorias del blog <span translate="no">Carbono Smart</span>  {% endblock header %}
+
+{% block title %} {% translate "Categorias /" %} {% endblock title %}
+{% load static %}
+{% block content %}
+<div class="bg-nav-secondary"></div>
+<section id="categories">
+  <div class="container my-4">
+    <div class="row">
+      {% for category in categories %}
+      <div class="col-12 col-sm-6 col-lg-4 my-2">
+        <div class="card">
+          <img src="{% get_media_prefix %}{{category.prin_img}}" class="card-img-top" alt="{{ category.name|capfirst }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ category.name|capfirst }}</h5>
+            <p class="card-text">
+              {{ category.description|capfirst|slice:":150" }} ... 
+            </p>
+            
+            <a href="{% url 'category' category.slug %}" class="btn btn-gradient-p-s">Ver articulos</a>            
+            {% if request.user.is_staff %}
+            <div class="card-footer mt-2">
+              <a class="link-info text-decoration-none"  data-bs-toggle="offcanvas" href="#editCategory-{{category.slug}}" role="button" aria-controls="editCategory-{{category.slug}}" style="margin-right: 26%;">Edit<i class="fa-solid fa-pen ms-2"></i></a>
+              <a href="" class="link-danger text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#delCategory-{{category.slug}}" aria-controls="delCategory-{{category.slug}}">Delete <i class="fa-solid fa-trash ms-2"></i></a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+        {% if request.user.is_staff %}
+          {% include 'blog/edit_category.html' %}
+          {% include 'blog/del-category.html' %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock content %}

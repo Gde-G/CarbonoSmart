@@ -1,0 +1,110 @@
+{% extends 'main.html'%}
+
+{% load i18n %}
+
+{% block title %}{% translate "Registrarse /" %}{% endblock title %}
+
+{% block header %} Registrarse en <span translate="no">Carbono Smart</span>{% endblock header%}
+{% load static %}
+{% load socialaccount %}
+{% block content %}
+<!-- ///////// Sign in ////////////-->
+<div class="bg-nav-secondary"></div>
+<section id="sign-in">
+  <div class="container sign-in">
+    <div class="row text-center ">
+      <h1 class="section-title">Registrarse</h1>
+      <div class="heading-line"></div>
+    </div>
+    <div class="row text-center my-2">
+      <form action="{% url 'account_signup'%}" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-12 col-sm-5 col-md-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control border-secondary" name="username" id="id_username"
+                placeholder="name@example.com">
+              <label for="id_username">Usuario</label>
+            </div>
+          </div>
+          <div class="col-12 col-sm-7 col-md-6">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control border-secondary" name="email" id="id_email"
+                placeholder="name@example.com">
+              <label for="id_email">Email</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <div class="input-group">
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control border-secondary" id="id_password1" name="password1"
+                  placeholder="*********" autocomplete="off" required>
+                <label for="id_password1" class="form-label">Contraseña</label>
+              </div>
+              <div class="input-group-append  border-secondary">
+                <span class="input-group-text rounded-start-0 text-muted border-secondary"
+                  onclick="password_show_hide(document.getElementById('id_password1'), document.getElementById('show_eye1'), document.getElementById('hide_eye1'));">
+                  <i class="fa-solid fa-eye h4" id="show_eye1"></i>
+                  <i class="fa-solid fa-eye-slash d-none h4" id="hide_eye1"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6">
+            <div class="input-group border-secondary mb-3">
+              <div class="form-floating">
+                <input type="password" class="form-control border-secondary" id="id_password2" name="password2"
+                  placeholder="*********" autocomplete="off" required>
+                <label for="id_password2" class="form-label">Confirmar Contraseña</label>
+              </div>
+              <div class="input-group-append">
+                <span class="input-group-text rounded-start-0 text-muted border-secondary"
+                  onclick="password_show_hide(document.getElementById('id_password2'), document.getElementById('show_eye2'), document.getElementById('hide_eye2'));">
+                  <i class="fa-solid fa-eye h4" id="show_eye2"></i>
+                  <i class="fa-solid fa-eye-slash d-none h4" id="hide_eye2"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ form_sign.captcha }}
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-gradient-p-s w-50">Crear Cuenta</button>
+        </div>
+      </form>
+    </div>
+    <div class="line-separator mt-3">
+      <hr class="line">
+      <div class="text">OR</div>
+    </div>
+    <div class="row text-center mb-5">
+      <h3 class="section-subtitle"></h3>
+      <div class="col-12 col-sm-6">
+        <a href="{% provider_login_url 'google'%}" class="btn btn-light border-2 border-dark sign-in-others"><i
+            class="fa-brands fa-google me-2"></i>Registrarse con Google</a>
+      </div>
+
+      <div class="col-12 col-sm-6">
+        <a href="" class="btn btn-info border-2 border-dark sign-in-others"><i
+            class="fa-brands fa-facebook me-2"></i>Registrarse con
+          Facebook</a>
+      </div>
+    </div>
+    <div class="line-separator">
+      <hr class="line">
+    </div>
+    <div class="row text-center back-gray rounded-bottom-3">
+      <h3 class="section-p text-muted">Ya tenes cuenta? <a href="{% url 'account_login'%}" class="link-secondary">Inicia Sesion</a>
+      </h3>
+      <small class="text-muted">Al crearse la cuenta se asume que esta de acuerdo con las <a href="{% url 'priv-policy' %}" class="link-info">Política de privacidad.</a></small>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+
+{% block script-ext %}
+
+{% endblock script-ext%}

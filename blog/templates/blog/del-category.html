@@ -1,0 +1,19 @@
+<div class="offcanvas offcanvas-top" tabindex="-1" id="delCategory-{{category.slug}}"
+  aria-labelledby="delCategory-{{category.slug}}Label" style="height:fit-content">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="delCategory-{{category.slug}}Label">Eliminar categoria</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body bg-dark text-white">
+    <div class="row text-center">
+      <h3 class="section subtitle">
+        Categoria: {{category.name}}
+      </h3>
+    </div>
+    <form action="{% url 'del-category' category.slug %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-gradient-s-p w-100 px-2 pb-2">Eliminar categoria</button>
+    </form>
+
+  </div>
+</div>

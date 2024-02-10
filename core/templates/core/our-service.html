@@ -1,0 +1,24 @@
+{% extends 'main.html'%}
+
+{% load i18n %}
+
+{% block title %}{% translate "Nuestros Servicios /" %}{% endblock title %}
+
+{% block header %} Servicios que ofrecemos en <span translate="no">Carbono Smart</span>{% endblock header%}
+{% load static %}
+{% block content %}
+<div class="bg-nav-secondary"></div>
+<section id="our-services">
+  <div class="container cont-handler">
+    <img src="{% static 'assets/images/cfp-logo.png'%}" class="img-logo" alt="Carbono Smart logo">
+    <div class="content-disabled">
+      <p class="section-p">Lo sentimos esta seccíon sigue en desarrollo</p>
+      <p class="seciont-p">
+        Para obtener la informacion sobre los servicios que prestamos en
+        <span translate="no">Carbono Smart </span> puede contactarnos en nuestra seccion de 
+        <a href="{% url 'contact' %}" class="link-light h4 d-block">Contacto <i class="fa-regular fa-hand-pointer mx-2"></i></a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

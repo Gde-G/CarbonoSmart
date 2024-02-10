@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% load i18n %}
+{% block metatags %} 
+<meta name="description" content="Desde Carbono Smart, Proporcionamos orientación experta y recursos informativos para brindarles prácticas
+          sostenibles, reducir su huella ecológica y promover la responsabilidad corporativa.">
+<meta name="keywords" content="Información Carbono Smart, Sobre Carbono Smart, Blog huella de carbono">
+{% endblock metatags %}
+{% block title %} {% translate "Nosotros /" %} {% endblock title%}
+
+{% block header%} Sobre Nosotros, <span translate="no">Carbono Smart</span> {% endblock header%}
+{% load static %}
+{% block content %}
+<div class="bg-nav-primary"></div>
+<section id="about-us-page">
+  <div class="container">
+    <div class="row text-center">
+      <h1 class="section-title text-capitalize">Sobre Nosotros</h1>
+      <div class="heading-line"></div>
+    </div>
+    <div class="row text-center">
+      <div class="d-flex">
+        <p class="section-p my-auto" style="line-height: 2rem;">
+          Somos un grupo de personas comprometidas y apasionadas que se unieron debido a la profunda preocupación por el
+          estado ambiental. En lugar de aceptar la situación como inevitable, decidimos formar esta organización con una
+          visión única. Reconocimos que existe una desinformación acerca de que los recursos tienen un valor mucho más
+          allá
+          de lo que se les atribuye comúnmente. Por lo que creamos <span translate="no">Carbono Smart</span> con el fin de informar a empresas y
+          particulares cómo la sustentabilidad es un enorme potencial de negocio.
+        </p>
+        <img src="{% static 'assets/images/cfp-logo.png'%}" class="about-us-img" alt="Carbono Smart about us">
+      </div>
+    </div>
+    <div class="row text-center mt-3">
+      <h3 class="section-subtitle text-capitalize">Nuestra mision</h3>
+      <div class="subheading-line mb-4"></div>
+      <div class="d-flex">
+        <img src="{% static 'assets/images/about-us/ower-mission.jpg'%}" class="about-us-img"
+          alt="Carbono Smart about us">
+        <p class="section-p my-auto" style="line-height: 2.4rem;">
+          Nuestro objetivo es capacitar a las organizaciones y particulares para que crezcan mientras cumplen con su
+          responsabilidad social. Proporcionamos orientación experta y recursos informativos para brindarles prácticas
+          sostenibles, reducir su huella ecológica y promover la responsabilidad corporativa. Demostramos que la
+          sostenibilidad
+          y el éxito económico no son excluyentes, sino que van de la mano. <br> Al implementar nuestras estrategias,
+          lograrán
+          beneficios inmediatos.
+        </p>
+      </div>
+    </div>
+    <div class="row text-center mt-3">
+      <h3 class="section-subtitle text-capitalize">Nuestra vision</h3>
+      <div class="subheading-line mb-4"></div>
+      <div class="d-flex">
+        <p class="section-p my-auto" style="line-height: 2rem;">
+          Nuestra visión es crear un entorno en el que la sostenibilidad económica, ambiental y social sea la norma.
+          Buscamos liderar el impulso de la transformación organizativa hacia un enfoque más consciente y responsable.
+          Nos vemos como facilitadores del cambio positivo, donde las organizaciones crezcan económicamente mientras
+          cumplen su responsabilidad social y reducen su huella ambiental. Aspiramos a ser reconocidos como un referente
+          en el sector, inspirando y colaborando con entidades de todas las industrias para crear un futuro próspero y
+          sostenible, donde el éxito esté intrínsecamente ligado a la generación de beneficios económicos, sociales y
+          ambientales duraderos.
+        </p>
+        <img src="{% static 'assets/images/about-us/ower-vision.jpg'%}" class="about-us-img"
+          alt="Carbono Smart about us">
+      </div>
+    </div>
+    <div class="row text-center mt-5">
+      <span><a href="{% url 'priv-policy' %}" class="link-info text-small">Politicas de privacidad</a> | <a
+          href="{% url 'term-use'%}" class="link-info text-small">Terminos de uso</a></span>
+    </div>
+  </div>
+</section>
+{% endblock content %}

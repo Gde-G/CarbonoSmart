@@ -1,0 +1,17 @@
+{% if not consent %}
+
+<div class="cookie-consent-banner" id="cookie-consent-banner">
+  <div class="row">
+    <div class="col-10">
+      <p>
+        Desde <span translate="no">Carbono Smart</span> utilizamos cookies para brindarle una mejor experiencia como usuario,
+        al utilizar nuestra plataforma aceptas el uso de cookies. <a href="{% url 'priv-policy'%}" class="link-primary text-decoration-none"> Mas información.</a>
+      </p>
+    </div>
+    <div class="col-2 text-end">
+      <a hx-get="{% url 'consent' %}" hx-target="#cookie-consent-banner" hx-swap="outerHTML" class="btn btn-primary">Okey</a>
+    </div>
+  </div>
+
+</div>
+{% endif %}

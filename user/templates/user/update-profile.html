@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+
+{% block title %} Editar Perfil / {% endblock title %}
+{% load static %}
+{% block content%}
+<div class="bg-nav-secondary"></div>
+<section id="upd-profile" class="upd-profile" style="min-height: 60vh;">
+  <div class="container">
+    <div class="row text-center mt-3">
+      <h3 class="display-3"> Editar Perfil</h3>
+    </div>
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row text-center">
+        <div class="upd-profile-img position-relative">
+          {% if img_have %}
+          <div class="upd-profile-img-preview position-absolute top-50 start-50 translate-middle"
+            style="background: url({%get_media_prefix%}{{user.profile_img}}); background-size: cover; background-position: center center; background-repeat: no-repeat;">
+          </div>
+          {% else %}
+          <div class="upd-profile-img-preview position-absolute top-50 start-50 translate-middle"></div>
+          <div class="upd-profile-img-border position-absolute top-50 start-50 translate-middle"></div>
+          {% endif %}
+          <label class="upd-profile-img-input" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-custom-class="custom-tooltip" data-bs-title="Change your profile picture">
+            <i class="fa-solid fa-plus position-absolute top-50 start-50 translate-middle"></i>
+            <input type="file" name="profile_img" id="id_profile_img" class="upload-img" value="Upload Photo"
+              data-browse-on-zone-click="true">
+          </label>
+        </div>
+      </div>
+      <div class="row text-center my-3" id="account-data">
+        <h5 class="section-title">Datos de la cuenta</h5>
+        <div class="col-12 col-sm-6 mb-3">
+          <label for="id_username" class="form-label fw-bold">Usuario</label>
+          <input type="text" name="username" id="id_username" class="form-control border border-secondary border-2"
+            value="{{user.username}}">
+        </div>
+        <div class="col-12 col-sm-6 mb-3">
+          <label for="id_email" class="form-label fw-bold">Email</label>
+          <input type="email" name="email" id="id_email" class="form-control border border-secondary border-2"
+            value="{{user.email}}">
+        </div>
+      </div>
+      <div class="row text-center" id="personal-data">
+        <h5 class="section-title">Datos personales</h5>
+        <div class="col-12 col-sm-2 mb-2"></div>
+        <div class="col-12 col-sm-4 mb-3">
+          <label for="id_first_name" class="form-label fw-bold">Nombre</label>
+          <input type="text" name="first_name" id="id_first_name" class="form-control border border-secondary border-2"
+            value="{{user.first_name}}">
+        </div>
+        <div class="col-12 col-sm-4 mb-3">
+          <label for="id_last_name" class="form-label fw-bold">Apellido</label>
+          <input type="text" name="last_name" id="id_last_name" class="form-control border border-secondary border-2"
+            value="{{user.last_name}}">
+        </div>
+        <div class="col-12 col-sm-2 mb-2"></div>
+      </div>
+      {{ form.captcha }}
+      <div class="row text-center d-flex justify-content-center my-5">
+        <button type="submit" class=" btn btn-gradient-s-p w-50">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock content%}
+
+{% block script-ext %}
+<script src="{% static 'assets/js/profile-show.js' %}"></script>
+<script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+{% endblock script-ext %}

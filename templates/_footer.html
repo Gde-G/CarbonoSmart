@@ -1,0 +1,46 @@
+{% load static %}
+<footer class="footer mt-0">
+  <div class="container-fluid px-0">
+    <div class="row w-100 mt-0 pt-2 mb-3 mx-0">
+      <div class="col-md-4 px-0 position-relative">
+        <div class="footer-logo mt-3">
+          <img src="{% static 'assets/images/cfp-logo.png' %}" alt="Carbono Smart logo">
+          <span class="section-subtitle" translate="no">Carbono Smart</span>
+          <p class="section-p mt-2" style="color: rgb(181, 181, 181);">Sustentabilidad inteligente para un mundo en
+            evolución.</p>
+          <div class="heading-line-light hide-md"></div>
+        </div>
+
+      </div>
+
+      <div class="col-md-8 px-0">
+        <div class="row w-100 mx-0 text-center">
+          <h3 class="p-blog">Redes Sociales</h3>
+        </div>
+        <div class="row w-100 mx-0">
+          <div class="col-4 px-0">
+            <a href="#" class="footer-social twitter"><i class="fa-brands fa-twitter fs-2"></i> <br> Twitter</a>
+          </div>
+          <div class="col-4 position-relative px-0">
+            <a href="#" class="footer-social instagram"><i class="fa-brands fa-instagram fs-2"></i><br>Instagram</a>
+          </div>
+          <div class="col-4 position-relative px-0">
+            <a href="#" class="footer-social facebook"><i class="fa-brands fa-facebook fs-2"></i><br>Facebook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row w-100 mx-0 margin-footer-bottom">
+      <ul class="list-unstyled footer-links">
+        <li><a href="{% url 'priv-policy' %}">Politica de privacidad</a></li>
+        <li><a href="{% url 'home'%}">Inicio</a></li>
+        <li><a href="{% url 'about-us'%}">Nosotros</a></li>
+        <li><a href="{% url 'blog' %}">Archivo del blog</a></li>
+        <li><a href="{% url 'contact' %}">Contactanos</a></li>
+      </ul>
+    </div>
+    <div class="row w-100 mx-0">
+      <p class="copyright p-blog" translate="no">Copyright &copy; 2023 Carbono Smart</p>
+    </div>
+  </div>
+</footer>

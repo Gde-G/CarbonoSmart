@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+  <h1 style="font-size:30px;color: rgb(0, 34, 7);">Consulta de una organizacion/Empresa</h1>
+  <hr>
+  <h1 style="font-size:26px;color: rgb(0, 23, 34);">Nombre de la organizacion: {{org_consult.name}}</h1>
+  <h6 style="font-size:24px;color: rgb(0, 23, 34);">Web: {{org_web}} . <strong>NO ENTRAR A LA PAGINA HASTA QUE EL ARTY CHEKEE QUE SEA REAL. Por precaucion al "physhing".</strong></h6>
+  <br>
+  <h2 style="font-size:23px;color: rgb(0, 23, 34);">Echa por: {{org_consult.contact_name}}</h2>
+  <h3 style="font-size:23px;color: rgb(0, 23, 34);">Telefono de contato: {{org_consult.contact_phone}}</h3>
+  <h3 style="font-size:20px;color: rgb(0, 23, 34);">Fecha: {{datetime}}</h3>
+  <br>
+  <hr>
+  <strong style="font-size:18px;color: rgb(0, 23, 34);">Topico que le interesa: {{org_consult.topic_about}}</strong>
+  <p style="font-size:16px;">{{org_consult.content}}</p>
+  <br>
+  <hr>
+  <p style="font-size:18px;color: rgb(32, 36, 37); margin: 0 auto;">Automaticamente le respondera el email al que subio en el formulario: {{org_consult.contact_email}}</p>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+{% load i18n %}
+{% block metatags %}
+<meta name="description" content="En Carbono Smart estamos encantados de recibir tus consultas, inquietudes y dudas! Queremos asegurarnos de brindarte toda la información y ayuda que necesitas">
+<meta name="keywords" content="Contacta a Carbono Smart">
+{% endblock metatags %}
+{% block title %} {% translate "Contactanos /" %} {% endblock title %}
+
+{% block header %}Contactanos <span translate="no">Carbono Smart</span> {% endblock header %}
+
+{% block content %}
+<div class="bg-nav-primary"></div>
+<section id="contact-page">
+  <div class="container-fluid mt-5">
+    <div class="row text-center">
+      <h3 class="section-title text-capitalize">Contactanos</h3>
+      <div class="heading-line"></div>
+    </div>
+    <div class="row contact-form-area">
+      <div class="col-12 col-md-5 px-0 text-center">
+        <p class="text-muted">¡Estamos encantados de recibir tus consultas, inquietudes y dudas! Queremos asegurarnos de
+          brindarte toda la información y ayuda que necesitas. Por favor, utiliza el siguiente formulario para enviarnos
+          tu mensajes.</p>
+        <p class="section-p">Si eres una organización interesada en obtener más información sobre nuestros servicios,
+          contáctanos a través de nuestro <a href="{% url 'companies-contact'%}" class="link-info d-block">formulario exclusivo para organizaciones.</a></p>
+      </div>
+      <div class="col-12 col-md-7 px-0">
+        {% include 'partials/fast-consult.html' %}
+      </div>
+    </div>
+    <div class="row text-center my-4">
+      <h3 class="section-subtitle">Otros medios de contacto</h3>
+      <div class="heading-line-light"></div>
+    </div>
+    <div class="row text-center w-100">
+      <div class="col-6 col-sm-3">
+        <a href="">
+          <div class="social-media instagram">
+            <span class="social-media-icon"><i class="fa-brands fa-instagram"></i></span>
+            <a href="" class="social-media-link">@carbonosmart</a>
+          </div>
+        </a>
+      </div>
+      <div class="col-6 col-sm-3">
+        <a href="">
+          <div class="social-media twitter">
+            <span class="social-media-icon"><i class="fa-brands fa-twitter"></i></span>
+            <a href="" class="social-media-link">@carbonosmart</a>
+          </div>
+        </a>
+      </div>
+      <div class="col-6 col-sm-3">
+        <a href="">
+          <div class="social-media facebook">
+            <span class="social-media-icon"><i class="fa-brands fa-facebook"></i></span>
+            <a href="" class="social-media-link">@carbonosmart</a>
+          </div>
+        </a>
+      </div>
+      <div class="col-6 col-sm-3">
+        <a href="">
+          <div class="social-media envelope">
+            <span class="social-media-icon"><i class="fa-solid fa-envelope"></i></span>
+            <a class="social-media-link">carbonosmart@gmail.com</a>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock content %}
+
+{% block script-ext %}
+{% if request.user.is_authenticated %}
+{% else %}
+<script type="text/javascript">
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
+</script>
+{% endif %}
+{% endblock script-ext %}

@@ -1,0 +1,277 @@
+{% extends 'main.html' %}
+{% load i18n %}
+{% block metatags %}
+<meta name="description" content="Archivo de blog de Carbono Smart. Aca podras encontar articulos de diversos temas, pero relazionados siempre con el ambiente y el cambio climatico">
+<meta name="keywords" content="Articulos Carbono, blog ambiental, blog cambio climatico, huella de carbono">
+{% endblock metatags %}
+{% block header%} Blog, <span translate="no">Carbono Smart</span> {% endblock header%}
+
+{% block title%}{% translate "Blog /" %}  {% endblock title%}
+{% load static %}
+{% load blog_tags %}
+{% block content%}
+<div class="bg-nav-secondary"></div>
+<section id="blog">
+  <div class="container-fluid mb-4 p-0">
+    {% if request.user.is_staff %}
+    <div class="row text-center admin-btns">
+      <div class="col-12 col-sm-6 text-center my-1">
+        <a href="{% url 'add-article' %}" class="link-primary admin-btns-each h5">Crear Articulo<i
+            class="fa-brands fa-keycdn ms-2"></i></a>
+      </div>
+      <div class="col-12 col-sm-6 text-center my-1">
+        <a class="link-secondary admin-btns-each h5"  data-bs-toggle="offcanvas"
+          href="#createCategory" role="button" aria-controls="createCategory"
+          hx-get="{% url 'category-offcanvas' %}" hx-target="#createCategory" hx-trigger="click">Crear Categoria<i
+            class="fa-solid fa-pen ms-2"></i></a>
+      </div>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="createCategory" aria-labelledby="createCategoryLabel"></div>
+    {% endif%}
+    <div class="row w-100 h-100 m-0">
+      <div class="col-12 col-lg-3 p-0 m-0">
+        <div class="blog-filters">
+          <div class="d-lg-none">
+            <a class="link-light mb-3 h3 text-decoration-none" href="#filtersCollapse" data-bs-toggle="collapse" data-bs-target="#filtersCollapse">
+              Ordenar / Filtrar
+            </a>
+            <div class="heading-line-light"></div>
+          </div>
+          <div class="collapse d-lg-block" id="filtersCollapse">
+            <hr class="d-lg-none">
+            <h3 class="section-p">Ordenar por</h3>
+            <div class="heading-line-light"></div>
+            
+              {% if q_search == None %}
+            <div class="list-group list-group-horizontal-sm px-1">
+              <a href="{{request.META.PATH_INFO}}?sort=recent" class="list-group-item list-group-item-action list-group-item-primary"><small>Mas reciente</small> </a>
+              <a href="{{request.META.PATH_INFO}}?sort=ancient" class="list-group-item list-group-item-action list-group-item-secondary"><small>Mas antiguo</small> </a>
+            </div>
+            <div class="list-group list-group-horizontal-sm px-1">
+              <a href="{{request.META.PATH_INFO}}?sort=views"
+                class="list-group-item list-group-item-action list-group-item-secondary"><small>Mas visto</small> </a>
+              <a href="{{request.META.PATH_INFO}}?sort=liked"
+                class="list-group-item list-group-item-action list-group-item-primary"><small>Mas gustado</small> </a>
+            </div>
+              {% else %}
+            <div class="list-group list-group-horizontal-sm px-1">
+              <a href="{{request.META.PATH_INFO}}?q-search={{q_search}}&sort=recent"
+                class="list-group-item list-group-item-action list-group-item-primary"><small>Mas reciente</small> </a>
+              <a href="{{request.META.PATH_INFO}}?q-search={{q_search}}&sort=ancient"
+                class="list-group-item list-group-item-action list-group-item-secondary"><small>Mas antiguo</small> </a>
+            </div>
+            <div class="list-group list-group-horizontal-sm px-1">
+              <a href="{{request.META.PATH_INFO}}?q-search={{q_search}}&sort=views"
+                class="list-group-item list-group-item-action list-group-item-primary"><small>Mas visto</small> </a>
+              <a href="{{request.META.PATH_INFO}}?q-search={{q_search}}&sort=liked"
+                class="list-group-item list-group-item-action list-group-item-secondary"><small>Mas gustado</small> </a>
+            </div>
+              {% endif %}
+            
+            <h3 class="section-p">Filtros</h3>
+            <div class="heading-line-light"></div>
+            <div class="btn-group dropdown-center my-4 w-100 px-1">
+              <button type="button" class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <h5 class="display-7 d-inline">Categorias</h5>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a href="{% url 'blog' %}" class="dropdown-item text-white">Todas</a></li>
+                <hr>
+                {% for cate in categories%}
+                <li><a href="{% url 'category' cate.slug %}" class="dropdown-item text-white">{{cate.name|capfirst}}</a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <label for="q-search">Busqueda por texto</label>
+            {% if request.META.PATH_INFO == "/blog/" %}
+            <form class="d-flex px-1 pb-3 mb-2" role="search" method="get" action="{% url 'blog'%}">
+              <input class="form-control rounded-end-0" type="search" name="q-search" id="q-search" placeholder="Search" aria-label="Search" >
+              <button class="btn btn-outline-light rounded-start-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            {% else %}
+            <form class="d-flex px-1 pb-3 mb-2" role="search" method="get" action="{% url 'category' category.slug%}">
+              <input class="form-control rounded-end-0" type="search" name="q-search" id="q-search" placeholder="Search"
+                aria-label="Search">
+              <button class="btn btn-outline-light rounded-start-0" type="submit"><i
+                  class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-9">
+        {% if articles|length == 0 %}
+        <div class="row text-center w-100 my-3 px-0 mx-auto">
+          <h1 class="section-title">Por el momento no hay articulos en esta categoria</h1>
+          <h4 class="sectionsubtitle">En la brevedad el equipo de <span translate="no">Carbono Smart</span> subira los respectivos articulos.</h4>
+          <div class="d-flex justify-content-center">
+            <a href="{% url 'blog' %}" class="btn btn-gradient-s-p">Explorar otros articulos</a>
+          </div>
+        </div>
+        {% else %}
+          {% for article in articles %}
+            {% if article.publish_date|future_date %}
+        <div class="row text-center w-100 my-3 px-0 mx-auto">
+          <a href="{% url 'article' article.slug%}" class="article-cont">
+            <div class="card mb-3 mx-auto px-0 bg-dark text-white">
+              <div class="row g-0">
+                <div class="col-md-5">
+                  <div class="img-container">
+                    <img src="{% get_media_prefix %}{{article.prin_img}}" class="img-fluid rounded-start"
+                      alt="{{article.title}}">
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body pb-0">
+                    <span class="text-primary" style="margin-left: 50%;">{{article.category.name|capfirst}}</span>
+                    <h5 class="card-title mt-2">{{article.title|capfirst}}</h5>
+                    <div class="article-metrics">
+                      <span class="likes">{{articles.likes.count}}<i class="fa-regular fa-thumbs-up mx-1"></i></span>
+                      <span class="views">{{article.views}}<i class="fa-solid fa-chart-simple mx-1"></i></span>
+                    </div>
+                    <p class="card-text"><small class="text-white">Se publica el: {{article.publish_date}}</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% if request.user.is_staff %}
+          <div class="btn-group dropdown w-50 mx-auto mt-0 mb-5 py-0 ">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              Menu de: <span class="text-white">{{article.title|slice:":15"}}</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item bg-info link-light" href="{% url 'edit-article' article.slug%}">Edit<i
+                    class="fa-solid fa-pen ms-2"></i></a></li>
+              <li><a class="dropdown-item bg-danger link-light" href="#" data-bs-toggle="offcanvas"
+                  data-bs-target="#delArticle-{{article.slug}}" aria-controls="delArticle-{{article.slug}}">Delete<i
+                    class="fa-solid fa-trash ms-2"></i></a></li>
+        
+            </ul>
+          </div>
+          {% include 'blog/del-article.html'%}
+          {% endif %}
+        </div>
+            {% else %}
+        <div class="row text-center w-100 my-3 px-0 mx-auto">
+          <a href="{% url 'article' article.slug%}" class="article-cont">
+            <div class="card mb-3 mx-auto px-0" >
+              <div class="row g-0">
+                <div class="col-md-5">
+                  <div class="img-container">
+                    <img src="{% get_media_prefix %}{{article.prin_img}}" class="img-fluid rounded-start"
+                      alt="{{article.title}}">
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body">
+                    <span class="text-primary" style="margin-left: 50%;">{{article.category.name}}</span>
+                    <h5 class="card-title mt-2">{{article.title}}</h5>
+                    <div class="article-metrics">
+                      <span class="likes">{{article.likes.count}}<i class="fa-regular fa-thumbs-up mx-1"></i></span>
+                      <span class="views">{{article.views}}<i class="fa-solid fa-chart-simple mx-1"></i></span>
+                    </div>
+                    <p class="card-text published-date"><small class="text-body-secondary">Publicado hace: {{article.publish_date|timesince}}</small></p>      
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+            {% if request.user.is_staff %}
+          <div class="btn-group dropdown w-50 mx-auto mt-0 mb-5 py-0">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              Menu de: <span class="text-white">{{article.title|slice:":15"}}</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item bg-info link-light" href="{% url 'edit-article' article.slug%}">Edit<i class="fa-solid fa-pen ms-2"></i></a></li>
+              <li><a class="dropdown-item bg-danger link-light" href="#" data-bs-toggle="offcanvas" data-bs-target="#delArticle-{{article.slug}}" aria-controls="delArticle-{{article.slug}}">Delete<i class="fa-solid fa-trash ms-2"></i></a></li>
+              
+            </ul>
+          </div>
+              {% include 'blog/del-article.html'%}
+            {% endif %}
+        </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Paginator -->
+    <div class="row text-center" style="margin: 0 !important">
+      <nav id="paginator" aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          {% if articles.has_previous %}
+          <li class="page-item">
+            <a href="?p={{articles.previous_page_number}}&{{parameters}}" class="page-link">Anterior</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link">Anterior</a>
+          </li>
+          {% endif %}
+          {% if articles.paginator.num_pages < 4 %}
+          <li class="page-item mx-1 active">
+            <a class="page-link" href="{{request.META.PAGE_INFO}}?p={{articles.number}}&{{parameters}}">{{articles.number}}</a>
+          </li>  
+
+          {% else %}
+            {% if articles.number == 1%}
+          <li class="page-item mx-1 active"><a class="page-link" href="{{request.META.PAGE_INFO}}?p=1&{{parameters}}">1</a></li>
+          <li class="page-item mx-1 ">
+            <a class="page-link" href="{{request.META.PAGE_INFO}}?p=2&{{parameters}}">2</a>
+          </li>
+          <li class="page-separate mx-1">...</li>
+          <li class="page-item mx-1">
+            <a class="page-link"
+              href="{{request.META.PAGE_INFO}}?p={{articles.paginator.num_pages}}&{{parameters}}">{{articles.paginator.num_pages}}</a>
+          </li>
+            {% else %}
+              {% if articles.number == articles.paginator.num_pages %}
+          <li class="page-item mx-1"><a class="page-link" href="{{request.META.PAGE_INFO}}?p=1&{{parameters}}">1</a></li>
+          <li class="page-separate mx-1">...</li>
+          <li class="page-item mx-1 ">
+            <a class="page-link"
+              href="{{request.META.PAGE_INFO}}?p={{articles.number|substract_one}}&{{parameters}}">{{articles.number|substract_one}}</a>
+          </li>
+          <li class="page-item mx-1 active">
+            <a class="page-link"
+              href="{{request.META.PAGE_INFO}}?p={{articles.paginator.num_pages}}&{{parameters}}">{{articles.paginator.num_pages}}</a>
+          </li>
+              {% else %}
+          <li class="page-item mx-1"><a class="page-link" href="{{request.META.PAGE_INFO}}?p=1&{{parameters}}">1</a></li>
+          <li class="page-separate mx-1">...</li>
+          <li class="page-item mx-1 active">
+            <a class="page-link" href="{{request.META.PAGE_INFO}}?p={{articles.number}}&{{parameters}}">{{articles.number}}</a>
+          </li>
+          <li class="page-separate mx-1">...</li>
+          <li class="page-item mx-1">
+            <a class="page-link"
+              href="{{request.META.PAGE_INFO}}?p={{articles.paginator.num_pages}}&{{parameters}}">{{articles.paginator.num_pages}}</a>
+          </li>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+          {% if articles.has_next %}
+          <li class="page-item">
+            <a href="?p={{articles.next_page_number}}&{{parameters}}" class="page-link">Siguiente</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link">Siguiente</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+</section>
+{% endblock content%}
+
+{% block script-ext %}
+<script src="{% static 'assets/js/article-img-show.js' %}"></script>
+{% endblock script-ext %}

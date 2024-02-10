@@ -1,0 +1,88 @@
+{% extends 'main.html'%}
+
+{% block title %}Crear Articulo /{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="bg-nav-primary"></div>
+<div class="section" id="create-article">
+  <div class="container">
+    <div class="row text-center my-3">
+      <h3 class="section-title text-primary">Crear Articulo</h3>
+    </div>
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="row text-center w-100">
+        <div class="form-floating sizing-input" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Maximo 150 caracteres">
+          <input type="text" class="form-control border-1 border-secondary" name="title" id="id_title" placeholder="Titulo del articulo" maxlength="150" required>
+          <label for="id_title" class="ms-3">Titulo</label>
+        </div>
+      </div>
+      <div class="row text-center w-100">
+        <div class="form-floating sizing-input" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Maximo 500 caracteres">
+          <input type="text" class="form-control border-1 border-secondary" name="subtitle" id="id_subtitle" placeholder="Titulo del articulo"
+            maxlength="500" required>
+          <label for="id_subtitle" class="ms-3">Subtitulo</label>
+        </div>
+      </div>
+      <div class="row text-center w-100 mb-3">
+        <div class="col-12 col-md-6">
+          <div class="form-floating">
+            <select class="form-select border-1 border-secondary" id="id_category" name="category">
+              <option selected disabled>Seleccione una de las categorias</option>
+              {% for cate in categories %}
+              <option value="{{cate.id}}">{{cate.name}}</option>
+              {% endfor%}
+            </select>
+            <label for="id_category" class="ms-3">Categoria</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-floating">
+            <input type="datetime-local" class="form-control border-1 border-secondary" id="id_publish_date" name="publish_date" required data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato de la fecha: mes/dia/año || Formato de la hora: 12hs AM/PM ||"> 
+            <label for="id_publish_date" class="ms-3">Fecha a publicar</label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row text-center w-100 mb-3">
+        <h3 class="section-subtitle">Imagen principal</h3 >
+        <div class="img-portada position-relative">
+          <div class="img-preview-portada"></div>
+          <div class="img-portada-border position-absolute top-50 start-50 translate-middle"></div>
+          <label class="img-portada-input" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Subir imagen principal del articulo">
+        
+            <i class="fa-solid fa-plus position-absolute top-50 start-50 translate-middle"></i>
+            <input type="file" name="prin_img" id="id_prin_img" class="upload-img" value="Upload Photo"
+              data-browse-on-zone-click="true">
+          </label>
+        </div>
+        
+      </div>
+      
+      <div class="row text-center w-100 mb-3">
+        {{form.content}}
+      </div>
+      <div class="d-flex justify-content-center my-3">
+        <button type="submit" class="btn btn-gradient-s-p w-50">Continar</button>
+      </div>
+    </form>
+  </div>
+  
+</div>
+
+{% endblock content %}
+{% block script-ext %}
+<script type="text/javascript">
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+<script src="{% static 'assets/js/article-img-show.js' %}"></script>
+<script type="text/javascript">
+  var now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset() + 5);
+  document.getElementById('id_publish_date').value = now.toISOString().slice(0, 16);
+</script>
+{% endblock script-ext %}

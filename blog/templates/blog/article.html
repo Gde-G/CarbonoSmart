@@ -1,0 +1,327 @@
+{% extends 'main.html' %}
+{% load i18n %}
+{% block metatags %}
+<meta name="description" content="{{article.subtitle}}">
+<meta name="keywords" content="{{article.keywords}}">
+{% endblock metatags %}
+{% block title%} {% translate article.title %} / {% endblock title%}
+
+{% block header %}{{article.title}}. Articulo de <span translate="no">Carbono Smart</span> {% endblock header %}
+
+{% load static %}
+{% load blog_tags %}
+{% block content%}
+<div class="bg-nav-primary"></div>
+<section id="article">
+  <div class="container-fluid p-0 mx-0 mb-4">
+    {% if request.user.is_staff %}
+    <div class="row text-center w-100">
+      <div class="btn-group w-75 mx-auto" role="group" aria-label="Basic example">
+        <a href="{% url 'edit-article' article.slug%}" class="btn btn-primary">Edit<i class="fa-solid fa-pen ms-2"></i></a>
+        <a href="#" class="btn btn-danger rounded-end-1" data-bs-toggle="offcanvas" data-bs-target="#delArticle-{{article.slug}}" aria-controls="delArticle-{{article.slug}}">Delete<i class="fa-solid fa-trash ms-2"></i></a>
+        {% include 'blog/del-article.html' %}
+      </div>
+    </div>
+    {% endif %}
+    
+    <div class="row w-100 text-center mt-3">
+      <h1 class="title-article">{{article.title|capfirst}}</h1>
+    </div>
+    <div class="d-flex justify-content-end p-0 pe-5 m-0">
+      <small class="text-muted">{{article.publish_date}}</small>
+    </div>
+    <div class="row text-center w-100 mx-0 my-4">
+      <div class="img-container">
+        <img src="{% get_media_prefix %}{{article.prin_img}}" alt="{{article.title}}">
+      </div>
+    </div>
+    <div class="row text-center w-100 my-2">
+      <h3 class="subtitle-article">{{article.subtitle|capfirst}}</h3>
+    </div>
+    <div class="row w-100 my-4">
+      <div class="p-article">{{article.content | safe}}</div>
+    </div>
+  </div>
+</section>
+<section id="comments">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="likes-share" id="likes-share">
+        <div class="row text-center">
+          <div class="col-12 col-md-6 likes">
+            <span class="section-p me-3">Valorar articulo:</span>
+            {% if request.user.is_authenticated %}
+            <div class="btn-group btn-group-lg rounded-pill" role="group" aria-label="Large button group">
+              {% if liked %}
+              <button type="button" class="btn btn-dark done" id="like-btn" data-article-slug="{{article.slug}}">
+                {% if likes_amount > 10 %}
+                <span id="likes-amount">{{likes_amount}}</span> 
+                {% else %}
+                <span id="likes-amount"></span>
+                {% endif %}
+                <i class="fa-solid fa-thumbs-up mx-3 fs-3"></i>
+                <small>Me gusta</small>
+              </button>
+              <button type="button" class="btn btn-dark" id="dislike-btn" data-article-slug="{{article.slug}}">
+                <i class="fa-solid fa-thumbs-down"></i>
+              </button>
+              {% else %}
+                {% if disliked %}
+              <button type="button" class="btn btn-dark" id="like-btn" data-article-slug="{{article.slug}}">
+                {% if likes_amount > 10 %}
+                <span id="likes-amount">{{likes_amount}}</span>
+                {% else %}
+                <span id="likes-amount"></span>
+                {% endif %}
+                <i class="fa-solid fa-thumbs-up mx-3 fs-3"></i>
+                <small>Me gusta</small>
+              </button>
+              <button type="button" class="btn btn-dark done" id="dislike-btn" data-article-slug="{{article.slug}}">
+                <i class="fa-solid fa-thumbs-down"></i>
+              </button>
+                {% else %}
+              <button type="button" class="btn btn-dark" id="like-btn" data-article-slug="{{article.slug}}">
+                {% if likes_amount > 10 %}
+                <span id="likes-amount">{{likes_amount}}</span>
+                {% else %}
+                <span id="likes-amount"></span>
+                {% endif %}
+                <i class="fa-solid fa-thumbs-up mx-3 fs-3"></i>
+                <small>Me gusta</small>
+              </button>
+              <button type="button" class="btn btn-dark" id="dislike-btn" data-article-slug="{{article.slug}}">
+                <i class="fa-solid fa-thumbs-down"></i>
+              </button>
+                {% endif %}
+              {% endif %}
+            </div>
+            {% else %}
+            <div class="btn-group btn-group-lg rounded-pill" role="group" aria-label="Large button group">
+              <button type="button" onclick="topFunction()" class="btn btn-dark" id="btn-like" data-bs-toggle="collapse" href="#loginCollapse" role="button" aria-expanded="false" aria-controls="loginCollapse">
+                {% if likes_amount > 10 %}
+                <span id="likes-amount">{{likes_amount}}</span>
+                {% else %}
+                <span id="likes-amount"></span>
+                {% endif %}
+                <i class="fa-solid fa-thumbs-up mx-3 fs-3"></i>
+              </button>
+              <button type="button" onclick="topFunction()" class="btn btn-dark" id="btn-dislike" data-bs-toggle="collapse" href="#loginCollapse" role="button" aria-expanded="false" aria-controls="loginCollapse"><i class="fa-solid fa-thumbs-down"></i></button>
+            </div>
+            {% endif %}
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="share w-100">
+              <span class="section-p me-3 share-text">Compartir:</span>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://carbonosmart.com{% url 'article' article.slug %}" class="social-icon facebook" target="_blank">
+                <span class="social-media-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                data-bs-title="Compartir en facebook"><i class="fa-brands fa-facebook"></i></span>
+              </a>
+              <a href="https://twitter.com/intent/tweet?url=https://carbonosmart.com{% url 'article' article.slug %}" target="_blank" class="social-icon twitter" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                data-bs-title="Compartir en twitter"><span class="social-media-icon"><i class="fa-brands fa-twitter"></i></span></a>
+              
+              <a href="https://web.whatsapp.com/send?text=Check+out+this+article+of+Carbono+Smart%3A+https://carbonosmart.com{% url 'article' article.slug %}" target="_blank" class="social-icon whatsapp" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                data-bs-title="Compartir en whatsapp"><span class="social-media-icon"><i class="fa-brands fa-whatsapp"></i></span></a>
+              <a href="https://t.me/share/url?url=https://carbonosmart.com{% url 'article' article.slug %}" class="social-icon telegram" target="_blank" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-custom-class="custom-tooltip"
+                data-bs-title="Compartir en telegram"><span class="social-media-icon"><i class="fa-brands fa-telegram"></i></span></a>
+              <a onclick="copyToClipboard('#copyBtn-link','https://carbonosmart.com{% url 'article' article.slug %}')" id="copyBtn-link" class="social-icon link" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-custom-class="custom-tooltip"
+                data-bs-title="Copiar Link" id="copyBtn-link"><span class="social-media-icon"><i class="fa-solid fa-link"></i></span></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="comment px-0">
+        <form action="{% url 'add-comment' article.slug %}" method="post" id="create-comment" data-article-slug="{{article.slug}}">
+          {% csrf_token %}
+          <div class="row w-100 m-0 text-start">
+            <div class="col-12 col-sm-9 col-md-8 m-0 p-0">
+              <label for="id_content" class="form-label text-start section-subtitle ps-1 ps-sm-3 ps-md-5">Hacer comentario</label>
+              <div class="textarea-comment px-sm-1 px-md-3">
+                <textarea class="form-control border-primary" id="id_content" name="content" maxlength="750" rows="4" placeholder="Escriba aqui su comentario."></textarea>
+              </div>
+            </div>
+            <div class="col-12 col-sm-3 col-md-4 m-0 p-0">
+              {% if request.user.is_authenticated %}
+              <div class="w-100 h-100 position-relative">
+                <button type="submit" class="btn btn-gradient-p-s absolute-center-sm">Comentar</button>
+              </div>
+              {% else %}
+              <div class="w-100 h-100 position-relative">
+                <button type="button" onclick="topFunction()" class="btn btn-gradient-p-s absolute-center-sm" data-bs-toggle="collapse" href="#loginCollapse" role="button" aria-expanded="false" aria-controls="loginCollapse">Comentar</button>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <div class="view-comments mt-5 mb-3">
+        <h3 class="section-subtitle"><span id="comments-amount">{{comments|length}} </span> Comentarios</h3>
+        {% if comments|length == 0 %}
+        <p class="section-p text-muted" id="no-comments-prev" style="display: block;"><i class="fa-solid fa-arrow-up mx-2 text-primary"></i>Agrege el primer comentario<i class="fa-solid fa-arrow-up mx-2 text-secondary"></i></p>
+        {% endif %}
+        <div class="row text-center comments-container" id="comments-container">
+          {% for comment in comments %}
+          <div class="my-2 comments-each" id="{{comment.id}}">
+            <div class="row w-100">
+              <div class="col-3 col-md-2 position-relative">
+                <div class="comment-user-img" style="background-image: url('{%get_media_prefix%}{{comment.user.profile_img}}');">
+                </div>
+              </div>
+              <div class="col-9 col-md-10">
+                <div class="row w-100">
+                  <div class="col-7 text-start">
+                    <h5 class="section-p">{{comment.user.username|capfirst}}</h5>
+                  </div>
+                  <div class="col-5 text-end">
+                    <small class="text-muted">Hace {{comment.created_at|timesince|upto:','}}</small>
+                  </div>
+                </div>
+                <div class="row w-100">
+                  <p>{{comment|mention}}</p>
+                  {% if request.user == comment.user or request.user.is_staff == True %}
+                  <a href="{% url 'del-comment' article.slug comment.id%}" class="btn btn-danger comment-delete"><i class="fa-solid fa-trash"></i></a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="row w-100 m-0">
+                {% if request.user.is_authenticated %}
+                <a href="" class="link-info comment-reply" data-comment-id="{{comment.id}}">Responder <i class="fa-solid fa-comments"></i></a>
+                {% else %}
+                <a onclick="topFunction()" data-bs-toggle="collapse" href="#loginCollapse" role="button" aria-expanded="false"
+                            aria-controls="loginCollapse" class="link-info comment-reply" data-comment-id="{{comment.id}}">Responder <i
+                    class="fa-solid fa-comments"></i></a>
+                {% endif %}
+                <div class="comment-reply-form" id="{{comment.id}}" style="display:none;">
+                  <form action="" method="post" id="reply-form" data-comment-id="{{comment.id}}" data-article-slug="{{article.slug}}">
+                    {% csrf_token %}
+                    <div class="row w-100 m-0">
+                      <input type="text" class="d-none" name="parent_comment" id="id_parent_comment" value="{{comment.id}}">
+                      <div class="col-12 col-md-10 m-0 p-0">
+                        <div class="textarea-comment px-sm-1 px-md-3">
+                          <textarea class="form-control border-primary" id="id_content" name="content" maxlength="750" rows="4"
+                            placeholder="Escriba aqui su respuesta.">@{{comment.user.username}}</textarea>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-2 m-0 p-0">
+                        {% if request.user.is_authenticated %}
+                        <div class="w-100 h-100 position-relative">
+                          <button type="submit" class="btn btn-secondary absolute-center-sm">Responder</button>
+                        </div>
+                        {% else %}
+                        <div class="w-100 h-100 position-relative">
+                          <button type="button" onclick="topFunction()" class="btn btn-secondary absolute-center-sm"
+                            data-bs-toggle="collapse" href="#loginCollapse" role="button" aria-expanded="false"
+                            aria-controls="loginCollapse">Responder</button>
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </form>
+                </div>
+            </div>
+            
+            <div class="row w-100 m-0">
+                {% if comment.is_parent %}
+              <a href="" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover comments-see-replies"><i class="fa-solid fa-caret-down me-2"></i>Respuestas</a>
+                {% endif %}
+              <div class="comment-see-reply-container" id="comment-{{comment.id}}" style="display: none;">
+                {% if comment.is_parent %}
+                  {% for replie in comments_replies %}
+                    {% if replie.parent_comment == comment %}
+                  <div class="row w-100">
+                    <div class="col-3 col-md-2 position-relative">
+                      <div class="comment-user-img" style="background-image: url('/media/{{replie.user.profile_img}}');">
+                      </div>
+                    </div>
+                    <div class="col-9 col-md-10">
+                      <div class="row w-100">
+                        <div class="col-7 text-start">
+                          <h5 class="section-p">{{replie.user.username|capfirst}}</h5>
+                        </div>
+                        <div class="col-5 text-end">
+                          <small class="text-muted">Hace {{replie.created_at|timesince|upto:','}}</small>
+                        </div>
+                      </div>
+                      <div class="row w-100">
+                        <p>{{replie|mention}}</p>
+                        {% if request.user == replie.user or request.user.is_staff == True %}
+                        <a href="{% url 'del-comment' article.slug replie.id%}" class="btn btn-danger comment-delete"><i
+                            class="fa-solid fa-trash"></i></a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row w-100 m-0">
+                    {% if request.user.is_authenticated %}
+                    <a href="" class="link-info comment-reply" data-comment-id="{{comment.id}}">Responder <i
+                        class="fa-solid fa-comments"></i></a>
+                    {% else %}
+                    <a onclick="topFunction()" data-bs-toggle="collapse" href="#loginCollapse" role="button" aria-expanded="false"
+                      aria-controls="loginCollapse" class="link-info comment-reply" data-comment-id="{{comment.id}}">Responder <i
+                        class="fa-solid fa-comments"></i></a>
+                    {% endif %}
+                    <div class="comment-reply-form" id="{{comment.id}}" style="display:none;">
+                      <form action="" method="post" id="reply-form" data-comment-id="{{comment.id}}" data-comment-id="{{replie.id}}" data-article-slug="{{article.slug}}">
+                        {% csrf_token %}
+                        <div class="row w-100 m-0">
+                          <input type="text" class="d-none" name="parent_comment" id="id_parent_comment" value="{{comment.id}}">
+                          <div class="col-12 col-md-10 m-0 p-0">
+                            <div class="textarea-comment px-sm-1 px-md-3">
+                              <textarea class="form-control border-primary" id="id_content" name="content" maxlength="750" rows="4"
+                                placeholder="Escriba aqui su respuesta.">@{{replie.user.username}}</textarea>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-2 m-0 p-0">
+                            {% if request.user.is_authenticated %}
+                            <div class="w-100 h-100 position-relative">
+                              <button type="submit" class="btn btn-secondary absolute-center-sm">Responder</button>
+                            </div>
+                            {% else %}
+                            <div class="w-100 h-100 position-relative">
+                              <button type="button" onclick="topFunction()" class="btn btn-secondary absolute-center-sm"
+                                data-bs-toggle="collapse" href="#loginCollapse" role="button" aria-expanded="false"
+                                aria-controls="loginCollapse">Responder</button>
+                            </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                    {% endif %}
+                  {% endfor%}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content%}
+
+{% block script-ext %}
+{% if request.user.is_authenticated %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+<script src="{% static 'assets/js/article-valoration.js' %}"></script>
+<script src="{% static 'assets/js/article-comment.js' %}"></script>
+{% else %}
+<script type="text/javascript">
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
+</script>
+{% endif %}
+<script src="{% static 'assets/js/article-replies-see.js' %}"></script>
+<script src="{% static 'assets/js/clipboard.js'%}"></script>
+<script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+{% endblock script-ext %}

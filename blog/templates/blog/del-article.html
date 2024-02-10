@@ -1,0 +1,18 @@
+<div class="offcanvas offcanvas-top" tabindex="-1" id="delArticle-{{article.slug}}" aria-labelledby="delArticle-{{article.slug}}Label" style="height:fit-content">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="delArticle-{{article.slug}}Label">Eliminar articulo</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body bg-dark text-white">
+    <div class="row text-center">
+      <h3 class="section subtitle">
+        {{article.title}}
+      </h3>
+    </div>
+    <form action="{% url 'del-article' article.slug %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-gradient-s-p w-100 px-2 pb-2">Eliminar articulo</button>
+    </form>
+
+  </div>
+</div>

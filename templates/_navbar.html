@@ -1,0 +1,144 @@
+{% load static %}
+{% load blog_tags %}
+<!-- ///////// Navbar ////////////-->
+<nav class="navbar navbar-expand-lg bg-transparent-with-opacity" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="{% static 'assets/images/cfp-logo.png' %}" alt="Logo Knife" class="nav-logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="{% url 'about-us' %}">Sobre Nosotros</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="{% url 'blog' %}">Archivo del blog</a>
+        </li>
+        <li class="nav-item dropdown mx-2">
+          <a class="nav-link dropdown-toggle" href="{% url 'categories' %}">
+            Categorias
+          </a>
+          <ul class="dropdown-menu">
+            {% for cate in category_each %}
+            <li><a class="dropdown-item" href="{% url 'category' cate.slug %}">{{cate.name|capfirst}}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="{% url 'contact' %}" class="nav-link text-capitalize">Contactanos</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="{% url 'our-services' %}" class="nav-link text-capitalize">Nuestros servicios</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="{% url 'marketplace' %}" class="nav-link text-capitalize">Marketplace</a>
+        </li>
+      </ul>
+      <hr class="text-white">
+      
+      
+      <div class="navbar-user mx-3">
+        {% if request.user.is_authenticated %}
+        {% if noti_amount > 0%}
+        <a class="link-light text-decoration-none position-relative mx-3 my-auto" id="notifications-btn" data-bs-toggle="collapse" href="#notificationsCollapse"
+          role="button" aria-expanded="false" aria-controls="notificationsCollapse">
+          <i class="fa-solid fa-bell mx-3 text-white"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+            {{noti_amount}}
+            <span class="visually-hidden">Notifications of {{request.user}}</span>
+          </span>
+        </a>
+        {% else %}
+        <a href="{% url 'account_profile' %}#notifications" class="link-light text-decoration-none">
+          <i class="fa-solid fa-bell my-2 mx-3 text-white"></i>
+        </a>
+        {% endif %}
+        <div class="dropdown-center">
+          <button class="btn btn-outline-light dropdown-toggle text-capitalize border-0" type="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            {{ request.user }}
+          </button>
+          <ul class="dropdown-menu profile">
+            <li><a class="dropdown-item" href="{% url 'account_profile' %}"><i class="fa-regular fa-user me-3"></i>Pefil</a>
+            </li>
+            {% if request.user.is_staff %}
+            <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="fa-solid fa-toolbox me-3"></i>Admin</a>
+            </li>
+            {% endif %}
+            <li>
+              <a class="dropdown-item my-0 mx-auto" href="{% url 'account_logout' %}">
+                <button type="button" class="btn btn-secondary w-75 ">Logout</button>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% else %}
+
+        {% if page != 'sign-in' %}
+          {% if request.META.PATH_INFO|search_term:'/accounts/'%}
+      <div class="btn-group d-flex justify-content-end pe-5" role="group">
+        <a class="btn btn-primary-outline text-white" data-bs-toggle="collapse" href="#loginCollapse" role="button" aria-expanded="false" aria-controls="loginCollapse">Login</a>
+        <a href="{% url 'account_signup' %}" class="btn btn-light"> Sign up</a>
+      </div>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</nav>
+{% if request.user.is_authenticated %}
+<div class="collapse" id="notificationsCollapse">
+  <div class="container-notifications" id="container-notifications">
+    
+  </div>
+</div>
+{% else %}
+  {% if page != 'sign-in' %}
+    {% if request.META.PATH_INFO|search_term:'/accounts/'%}
+<div class="collapse" id="loginCollapse">
+  <div class="container-login">
+    <form action="{% url 'login-dropdown' %}" method="post">
+      {% csrf_token %}
+      <div class=" mb-3">
+        <label for="id_username" class="form-label">Usuario/Email</label>
+        <input type="text" class="form-control" id="id_username" name='username' placeholder="Usuario o email" required style="display: unset !important;">
+      </div>
+      <div class="mb-3">
+        <label for="id_password" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <input type="password" class="form-control" id="id_password" name="password" placeholder="*********"
+            autocomplete="off" required>
+          <div class="input-group-append">
+            <span class="input-group-text rounded-start-0 text-muted"
+              onclick="password_show_hide(document.getElementById('id_password'), document.getElementById('show_eye'), document.getElementById('hide_eye'));">
+              <i class="fa-solid fa-eye h4" id="show_eye"></i>
+              <i class="fa-solid fa-eye-slash d-none h4" id="hide_eye"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+        {{ login_form.captcha }}
+      <div class="form-check-reverse me-2 mb-2">
+        <a href="{% url 'account_reset_password'%}" class="text-start me-5"><small>Olvido su contraseña?</small> </a>
+        <input class="form-check-input" type="checkbox" value="" id="id_remember" name="remember">
+        <label class="form-check-label" for="id_remember">
+          Recordarme
+        </label>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-secondary border-dark">Ingresar</button>
+      </div>
+    </form>
+  </div>
+</div>
+    {% endif %}
+  {% endif %}
+{% endif %}
+
