@@ -1,0 +1,27 @@
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore Django-related files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pyo
+*.pyc
+*.pyo
+*.pyd
+media 
+static 
+
+# Ignore development and local configuration
+
+*.vscode
+.idea
+*.pyc
+
+venv
+# Ignore Celery-related files
+celerybeat-schedule
+celerybeat.pid
+

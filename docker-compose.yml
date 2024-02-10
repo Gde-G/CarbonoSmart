@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  web:
+    container_name: django-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: gunicorn cfp.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/
+    expose:
+      - 8000
+    env_file:
+      - .env
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./:/usr/src/app/
+    depends_on:
+      - web

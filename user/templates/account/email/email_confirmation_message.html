@@ -33,8 +33,8 @@
 <div class="container-content">
   <p class="text-email">Hi {{ user|capfirst}}, </p>
 
-  <p class="text-explain">Welcome to Fully User Django You are receiving this e-mail because you or someone else create an account using e-mail</p>
+  <p class="text-explain">Welcome to Carbono Smart You are receiving this e-mail because you or someone else create an account using e-mail</p>
 
-  <a href="{{ domain }}{% url 'account_confirm_email' uidb64=uid token=token %}" class="link-reset">Activate your account</a>
+  <a href="{{ protocol }}://{{ domain }}{% url 'account_confirm_email' uidb64=uid token=token %}" class="link-reset">Activate your account</a>
 </div>
 {% endblock content %}
