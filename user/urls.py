@@ -7,6 +7,7 @@ urlpatterns = [
 
     path('profile/', views.profile, name='account_profile'),
     path('edit-profile/', views.update_profile, name='edit-profile'),
+    path('del-profile/', views.delete_user, name='del-profile'),
     path('profile-notification/', views.notifications_profile,
          name='profile-notifications'),
     path('profile-likes/', views.likes_profile, name='likes-profile'),

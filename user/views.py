@@ -334,3 +334,13 @@ def likes_profile(request: HttpRequest):
 
     else:
         return JsonResponse([{'status': 'Access Denied!'}], safe=False)
+
+@login_required(login_url='account_login')
+def delete_user(request: HttpRequest):
+    user = MyUser.objects.get(id=request.user.id) 
+    if request.method == 'POST':
+        user.delete()
+        return redirect('home')
+    else:
+        messages.error(request, 'Algo ha salido mal, intent mas tarde!')
+        return  redirect('edit-profile')
