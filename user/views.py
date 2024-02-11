@@ -92,9 +92,18 @@ def sign_up(request: HttpRequest):
 
 
 def socialaccount_signup(request: HttpRequest):
-    messages.info(
-        request, 'Ya existe una cuenta con ese email! Inicie sesion para vincular su cuenta.')
-    return redirect('account_profile')
+
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save(request)
+            activate_with_email(request, user)
+            messages.success(request, f'Le enviamos un email para que active su email. Recuerde revisar su casilla de SPAM.')
+            return redirect('home')  
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {'form': form})
+    
 
 
 def activate(request, uidb64, token):

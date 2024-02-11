@@ -11,31 +11,32 @@
   <h3>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}Esta a punto de usar su cuenta de {{provider_name}} para registrarse
     . como paso final complete la siguiente informacion:{% endblocktrans %}</h3>
   <div class="row">
-    <div class="col-lg-6">
-      <form id="signup_form" method="post" action="{% url 'socialaccount_signup' %}" >
-        {% csrf_token %}
+    <form id="signup_form" method="post" action="{% url 'socialaccount_signup' %}" >
+      {% csrf_token %}
+      <div class="col-12 col-md-6 m-0">
         <label for="id_email" class="cat-logo text-dark me-2 h4">Email</label>
         <div class="input-group mb-3">
           <input type="text" id="id_email" name="email"
             class="form-control border border-secondary border-2 text-dark" placeholder="Ingrese su Email..."
             required aria-describedby="basic-addon1" placeholder="E-mail address" autocomplete="email" required="">
         </div>
+      </div>
+      <div class="col-12 col-md-6 m-0">
         <label for="id_username" class="cat-logo text-dark me-2 h4">Usuario</label>
         <div class="input-group mb-3">
           <input type="text" id="id_username" name="username"
             class="form-control border border-secondary border-2 text-dark" placeholder="Ingrese su Username..."
             required aria-describedby="basic-addon1" placeholder="Username" autocomplete="username">
         </div>
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-        
-        <div class="d-flex justify-content-center my-3">
-          <button type="submit" class="btn btn-outline-secondary shadow w-50 text-dark border border-3 border-secondary">{% trans "Registrarse" %} &raquo;</button>
-        </div>
-      </form>
-    </div>
-    
+      </div>
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      
+      <div class="d-flex justify-content-center my-3">
+        <button type="submit" class="btn btn-outline-secondary shadow w-50 text-dark border border-3 border-secondary">{% trans "Registrarse" %} &raquo;</button>
+      </div>
+    </form>
   </div>
 </div>
 {% endblock %}
