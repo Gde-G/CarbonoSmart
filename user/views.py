@@ -97,9 +97,18 @@ def socialaccount_signup(request: HttpRequest):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(request)
+            user.username = user.username.lower()
+            user.email = user.email.lower()
+            user.save()
+            EmailAddress.objects.create(
+                email=user.email, primary=True, user_id=user.pk)
             activate_with_email(request, user)
             messages.success(request, f'Le enviamos un email para que active su email. Recuerde revisar su casilla de SPAM.')
             return redirect('home')  
+        else:
+            for field, error in form.errors.as_data().items():
+                messages.error(request, f"ERROR: {field}, {error[0].messages}")
+
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
