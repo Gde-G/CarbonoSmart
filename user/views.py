@@ -349,7 +349,7 @@ def likes_profile(request: HttpRequest):
 
         likes_data = [{'status': 'success'}] + [{
             'title': article.title,
-            'prin_img': '/' + str(article.prin_img),
+            'prin_img': f'{settings.MEDIA_URL}{str(article.prin_img)}',
             'article_category': article.category.name,
             'date': timesince(article.created_at).split(',')[0],
             'article_slug': article.slug,
