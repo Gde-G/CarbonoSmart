@@ -314,4 +314,4 @@ STORAGES = {
     },
 }
 
-CSRF_TRUSTED_ORIGINS = list(os.environ.get('CSRF_TRUSTED_ORIGINS'))
+CSRF_TRUSTED_ORIGINS = list(os.environ.get('CSRF_TRUSTED_ORIGINS').split(','))
