@@ -111,7 +111,7 @@ def socialaccount_signup(request: HttpRequest):
 
     else:
         form = SignupForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'socialaccount/signup.html', {'form': form})
     
 
 
