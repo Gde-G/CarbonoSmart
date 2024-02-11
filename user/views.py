@@ -92,26 +92,33 @@ def sign_up(request: HttpRequest):
 
 
 def socialaccount_signup(request: HttpRequest):
-
     if request.method == 'POST':
-        form = MyUserAllauthSignUpForm(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
+            # Save the user
             user = form.save(request)
             user.username = user.username.lower()
             user.email = user.email.lower()
             user.save()
-            EmailAddress.objects.create(
-                email=user.email, primary=True, user_id=user.pk)
-            activate_with_email(request, user)
-            messages.success(request, f'Le enviamos un email para que active su email. Recuerde revisar su casilla de SPAM.')
-            return redirect('home')  
-        else:
-            for field, error in form.errors.as_data().items():
-                messages.error(request, f"ERROR: {field}, {error[0].messages}")
+            # Check if the user is created by a social account
+            social_account = SocialAccount.objects.filter(user=user).first()
+            if social_account:
+                # If a social account exists, retrieve and save additional data
+                extra_data = social_account.extra_data
+                
+                # Example: Save Facebook profile picture URL to user's profile
+                user.profile_picture = extra_data.get('picture', {}).get('data', {}).get('url')
+                user.save()
 
+            # Send activation email
+            activate_with_email(request, user)
+
+            # Redirect or do whatever you need
+            return redirect('home')
     else:
-        form = MyUserAllauthSignUpForm()
+        form = SignupForm()
     return render(request, 'socialaccount/signup.html', {'form': form})
+
     
 
 
