@@ -7,6 +7,7 @@
 {% block header %} Registrarse en <span translate="no">Carbono Smart</span>{% endblock header%}
 {% load static %}
 {% load socialaccount %}
+{% providers_media_js %}
 {% block content %}
 <!-- ///////// Sign in ////////////-->
 <div class="bg-nav-secondary"></div>
@@ -88,7 +89,7 @@
       </div>
 
       <div class="col-12 col-sm-6">
-        <a href="" class="btn btn-info border-2 border-dark sign-in-others"><i
+        <a href="{% provider_login_url 'facebook' %}" class="btn btn-info border-2 border-dark sign-in-others"><i
             class="fa-brands fa-facebook me-2"></i>Registrarse con
           Facebook</a>
       </div>
