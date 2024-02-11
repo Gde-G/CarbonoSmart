@@ -13,7 +13,7 @@
  
     <form id="signup_form" method="post" action="{% url 'socialaccount_signup' %}" >
       {% csrf_token %}
-      {% form.captcha%}
+      {{ form.captcha }}
       <div class="row">
         <div class="col-12 col-md-6 m-0">
           <label for="id_email" class="cat-logo text-dark me-2 h4">Email</label>
