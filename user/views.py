@@ -327,7 +327,7 @@ def notifications_profile(request: HttpRequest):
 
         notifications_data = [{'status': 'success'}] + [{
             'sender': notification.sender.username,
-            'sender_img': '/' + str(notification.sender.profile_img),
+            'sender_img': f'{settings.MEDIA_URL}{str(notification.sender.profile_img)}',
             'content': notification.content,
             'date': timesince(notification.created_at).split(',')[0],
             'article_slug': notification.article_slug,
