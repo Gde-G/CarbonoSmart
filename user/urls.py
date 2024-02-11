@@ -26,8 +26,6 @@ urlpatterns = [
     path('accounts/password/reset/key/done/', views.account_reset_password_from_key_done,
          name='account_reset_password_from_key_done'),
 
-    path('accounts/social/signup/', views.socialaccount_signup,
-         name='socialaccount_signup')
 ]
 
 htmx_urlpatterns = [
