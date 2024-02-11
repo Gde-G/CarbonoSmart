@@ -313,3 +313,5 @@ STORAGES = {
     	"BACKEND": "cfp.storage_backends.StaticStorage"
     },
 }
+
+CSRF_TRUSTED_ORIGINS = list(os.environ.get('CSRF_TRUSTED_ORIGINS'))
