@@ -32,7 +32,6 @@ DEBUG = bool(int(os.environ.get('DEBUG')))
 
 ALLOWED_HOSTS = list(os.environ.get('ALLOWED_HOSTS').split(','))
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -125,7 +124,7 @@ DATABASES = {
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
-        'POST': os.environ.get('DB_POST')
+        'PORT': os.environ.get('DB_PORT')
     }
 }
 

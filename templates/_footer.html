@@ -1,18 +1,16 @@
 {% load static %}
 <footer class="footer mt-0">
   <div class="container-fluid px-0">
-    <div class="row w-100 mt-0 pt-2 mb-3 mx-0">
-      <div class="col-md-4 px-0 position-relative">
-        <div class="footer-logo mt-3">
-          <img src="{% static 'assets/images/cfp-logo.png' %}" alt="Carbono Smart logo">
-          <span class="section-subtitle" translate="no">Carbono Smart</span>
-          <p class="section-p mt-2" style="color: rgb(181, 181, 181);">Sustentabilidad inteligente para un mundo en
-            evolución.</p>
-          <div class="heading-line-light hide-md"></div>
-        </div>
+    <div class="row w-100 mt-0 pt-2 mx-0 text-center">
+      <div class="footer-logo mt-3">
+        <img src="{% static 'assets/images/cfp-logo.png' %}" alt="Carbono Smart logo">
+        <span class="section-subtitle" translate="no">Carbono Smart</span>
+        <p class="section-p mt-2" style="color: rgb(181, 181, 181);">Sustentabilidad inteligente para un mundo en
+          evolución.</p>
+        <div class="heading-line-light hide-md"></div>
       </div>
     </div>
-    <div class="row w-100 mx-0 margin-footer-bottom">
+    <div class="row w-100 mx-0 d-none d-lg-block">
       <ul class="list-unstyled footer-links">
         <li><a href="{% url 'priv-policy' %}">Politica de privacidad</a></li>
         <li><a href="{% url 'home'%}">Inicio</a></li>
