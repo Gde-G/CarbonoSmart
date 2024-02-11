@@ -11,7 +11,6 @@ urlpatterns = [
     path('get-phone-code/', views.code_form_country, name='phone-code'),
 
     path('services/', views.our_service, name='our-services'),
-    path('marketplace/', views.marketplace, name='marketplace')
 ]
 
 htmx_urlpatterns = [

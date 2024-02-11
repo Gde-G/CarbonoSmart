@@ -155,10 +155,6 @@ def our_service(request: HttpRequest):
     return render(request, 'core/our-service.html')
 
 
-def marketplace(request: HttpRequest):
-    return render(request, 'core/marketplace.html')
-
-
 def set_consent(request: HttpRequest):
     response = render(request, 'partials/cookie-consent.html',
                       context={'consent': True})
