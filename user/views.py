@@ -94,7 +94,7 @@ def sign_up(request: HttpRequest):
 def socialaccount_signup(request: HttpRequest):
 
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = MyUserAllauthSignUpForm(request.POST)
         if form.is_valid():
             user = form.save(request)
             user.username = user.username.lower()
@@ -110,7 +110,7 @@ def socialaccount_signup(request: HttpRequest):
                 messages.error(request, f"ERROR: {field}, {error[0].messages}")
 
     else:
-        form = SignupForm()
+        form = MyUserAllauthSignUpForm()
     return render(request, 'socialaccount/signup.html', {'form': form})
     
 
