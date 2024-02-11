@@ -314,4 +314,4 @@ STORAGES = {
     },
 }
 
-CSRF_TRUSTED_ORIGINS = list(os.environ.get('CSRF_TRUSTED_ORIGINS').split(','))
+CSRF_TRUSTED_ORIGINS = list(os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost,http://127.0.0.1').split(','))
